@@ -8,12 +8,20 @@ async function loadData() {
 
 function renderTable(data) {
   const keyword = document.getElementById('searchInput').value.toLowerCase();
+  const table = document.getElementById('resultTable');
   const body = document.getElementById('resultBody');
   body.innerHTML = '';
 
   const filtered = data.filter(item =>
     item.품목 && item.품목.toLowerCase().includes(keyword)
   );
+
+  if (keyword.trim() === '') {
+    table.style.display = 'none';
+    return;
+  }
+
+  table.style.display = 'table';
 
   if (filtered.length === 0) {
     body.innerHTML = `<tr><td colspan="5">🔍 검색 결과가 없습니다.</td></tr>`;

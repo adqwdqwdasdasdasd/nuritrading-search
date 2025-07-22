@@ -14,7 +14,7 @@
       flex: 1; border: none; background: transparent;
       font-size: 16px; outline: none;
     }
-    table { width: 100%; border-collapse: collapse; }
+    table { width: 100%; border-collapse: collapse; display: none; }
     th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: center; }
     img { width: 80px; border-radius: 8px; }
   </style>
@@ -25,7 +25,7 @@
     🔍 <input type="text" id="searchInput" placeholder="품목 검색 (예: 가리비, 연어 등)" />
   </div>
 
-  <table>
+  <table id="resultTable">
     <thead>
       <tr>
         <th>품목</th><th>원산지</th><th>단가</th><th>브랜드</th><th>제품사진</th>
