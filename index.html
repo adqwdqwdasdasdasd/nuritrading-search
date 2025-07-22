@@ -4,25 +4,83 @@
   <meta charset="UTF-8" />
   <title>단가표 검색</title>
   <style>
-    body { font-family: sans-serif; padding: 30px; }
+    body {
+      font-family: sans-serif;
+      padding: 30px;
+      background: #ffffff;
+    }
+
+    .search-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+
     .search-box {
-      max-width: 500px; margin: 0 auto 30px;
-      display: flex; align-items: center;
-      background: #f0f0f0; border-radius: 999px; padding: 10px 20px;
+      position: relative;
+      width: 100%;
+      max-width: 600px;
     }
+
     .search-box input {
-      flex: 1; border: none; background: transparent;
-      font-size: 16px; outline: none;
+      width: 100%;
+      padding: 18px 55px 18px 24px;
+      font-size: 18px;
+      border: 2px solid #ccc;
+      border-radius: 999px;
+      outline: none;
+      transition: border-color 0.2s ease;
     }
-    table { width: 100%; border-collapse: collapse; display: none; }
-    th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: center; }
-    img { width: 80px; border-radius: 8px; }
+
+    .search-box input:focus {
+      border-color: #999;
+    }
+
+    .search-box::after {
+      content: "🔍";
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      color: #666;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      display: none;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+
+    img {
+      width: 80px;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .search-box input {
+        font-size: 16px;
+        padding: 14px 50px 14px 20px;
+      }
+
+      img {
+        width: 60px;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <div class="search-box">
-    🔍 <input type="text" id="searchInput" placeholder="품목 검색 (예: 가리비, 연어 등)" />
+  <div class="search-container">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="예: 가리비, 연어 등 검색" />
+    </div>
   </div>
 
   <table id="resultTable">
