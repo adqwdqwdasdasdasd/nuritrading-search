@@ -24,7 +24,7 @@ function renderTable(data) {
   table.style.display = 'table';
 
   if (filtered.length === 0) {
-    body.innerHTML = `<tr><td colspan="5">🔍 검색 결과가 없습니다.</td></tr>`;
+    body.innerHTML = `<tr><td colspan="7">🔍 검색 결과가 없습니다.</td></tr>`;
     return;
   }
 
@@ -33,9 +33,11 @@ function renderTable(data) {
     row.innerHTML = `
       <td>${item.품목 || ''}</td>
       <td>${item.원산지 || ''}</td>
+      <td>${item.중량 || ''}</td>
+      <td>${item.규격 || ''}</td>
       <td>${item.단가 || ''}</td>
+      <td>${item.창고 || ''}</td>
       <td>${item.브랜드 || ''}</td>
-      <td><img src="${item.제품사진 || ''}" alt="이미지" /></td>
     `;
     body.appendChild(row);
   }
