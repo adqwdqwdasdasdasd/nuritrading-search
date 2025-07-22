@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>단가표 검색</title>
+  <style>
+    body { font-family: sans-serif; padding: 30px; }
+    .search-box {
+      max-width: 500px; margin: 0 auto 30px;
+      display: flex; align-items: center;
+      background: #f0f0f0; border-radius: 999px; padding: 10px 20px;
+    }
+    .search-box input {
+      flex: 1; border: none; background: transparent;
+      font-size: 16px; outline: none;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: center; }
+    img { width: 80px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+
+  <div class="search-box">
+    🔍 <input type="text" id="searchInput" placeholder="품목 검색 (예: 가리비, 연어 등)" />
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>품목</th><th>원산지</th><th>단가</th><th>브랜드</th><th>제품사진</th>
+      </tr>
+    </thead>
+    <tbody id="resultBody">
+      <tr><td colspan="5">⏳ 불러오는 중...</td></tr>
+    </tbody>
+  </table>
+
+  <script src="script.js"></script>
+</body>
+</html>
