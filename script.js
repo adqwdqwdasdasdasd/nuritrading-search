@@ -4,7 +4,7 @@ async function loadData() {
   const res = await fetch('data.json');
   allData = await res.json();
   renderTable(allData);
-  sendHeight(); // 최초 로드 시 높이 전송
+  sendHeight(); // 초기 높이
 }
 
 function renderTable(data) {
@@ -55,7 +55,7 @@ function sendHeight() {
       type: 'setHeight',
       height: document.documentElement.scrollHeight
     }, '*');
-  }, 50); // 약간의 딜레이로 레이아웃 렌더링 완료 후 높이 계산
+  }, 50);
 }
 
 document.getElementById('searchInput').addEventListener('input', () => {
