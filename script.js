@@ -9,11 +9,12 @@ async function loadData() {
 function renderTable(data) {
   const keyword = document.getElementById('searchInput').value.toLowerCase();
   const table = document.getElementById('resultTable');
+  const wrapper = document.getElementById('tableWrapper');
   const body = document.getElementById('resultBody');
   body.innerHTML = '';
 
   if (keyword.trim() === '') {
-    table.style.display = 'none';
+    wrapper.classList.remove('active');
     return;
   }
 
@@ -23,12 +24,13 @@ function renderTable(data) {
     )
   );
 
-  table.style.display = 'table';
-
   if (filtered.length === 0) {
+    wrapper.classList.add('active');
     body.innerHTML = `<tr><td colspan="7">🔍 검색 결과가 없습니다.</td></tr>`;
     return;
   }
+
+  wrapper.classList.add('active');
 
   for (const item of filtered) {
     const row = document.createElement('tr');
