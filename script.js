@@ -12,14 +12,16 @@ function renderTable(data) {
   const body = document.getElementById('resultBody');
   body.innerHTML = '';
 
-  const filtered = data.filter(item =>
-    item.품목 && item.품목.toLowerCase().includes(keyword)
-  );
-
   if (keyword.trim() === '') {
     table.style.display = 'none';
     return;
   }
+
+  const filtered = data.filter(item =>
+    Object.values(item).some(
+      val => val && val.toString().toLowerCase().includes(keyword)
+    )
+  );
 
   table.style.display = 'table';
 
