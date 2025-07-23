@@ -1,131 +1,84 @@
+
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>단가표 검색</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nuritrading Search</title>
   <style>
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
       font-family: sans-serif;
-      background: #ffffff;
     }
-
-    .search-container {
-      display: flex;
-      justify-content: center;
-      padding: 12px 16px;
-      background: transparent;
+    .container {
+      padding: 1rem;
     }
-
-    .search-box {
-      position: relative;
-      width: 100%;
-      max-width: 600px;
-    }
-
-    .search-box input {
-      width: 100%;
-      padding: 14px 48px 14px 20px;
-      font-size: 17px;
-      border: 2px solid #ccc;
-      border-radius: 999px;
-      outline: none;
-      transition: border-color 0.2s ease;
-      box-sizing: border-box;
-      background-color: transparent;
-    }
-
-    .search-box input:focus {
-      border-color: #999;
-    }
-
-    .search-box::after {
-      content: "🔍";
-      position: absolute;
-      right: 18px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 18px;
-      color: #666;
-    }
-
-    #tableWrapper {
+    .data-table {
+      margin-top: 1rem;
       display: none;
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 80px;
-      padding: 16px;
-      background: #fff;
-      z-index: 10;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     }
-
-    #tableWrapper.active {
+    .data-table.show {
       display: block;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      padding: 8px 6px;
-      border-bottom: 1px solid #ddd;
-      text-align: center;
-      font-size: 15px;
-    }
-
-    th {
-      background-color: #f9f9f9;
-    }
-
-    @media (max-width: 600px) {
-      .search-container {
-        padding: 8px 12px;
-      }
-
-      .search-box input {
-        font-size: 15px;
-        padding: 12px 44px 12px 16px;
-      }
-
-      th, td {
-        padding: 6px 4px;
-        font-size: 13px;
-      }
-
-      #tableWrapper {
-        top: 68px;
-        padding: 12px;
-      }
     }
   </style>
 </head>
 <body>
-
-  <div class="search-container">
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="예: 가리비, 연어 등 검색" />
+  <div class="container">
+    <input id="search" placeholder="검색어를 입력하세요" style="width: 100%; padding: 8px;" />
+    <div id="result" class="data-table">
+      <table border="1" width="100%">
+        <thead>
+          <tr>
+            <th>품목</th><th>원산지</th><th>중량</th><th>규격</th><th>단가</th><th>창고</th><th>브랜드</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+      </table>
     </div>
   </div>
 
-  <div id="tableWrapper">
-    <table id="resultTable">
-      <thead>
-        <tr>
-          <th>품목</th><th>원산지</th><th>중량</th><th>규격</th><th>단가</th><th>창고</th><th>브랜드</th>
-        </tr>
-      </thead>
-      <tbody id="resultBody">
-        <tr><td colspan="7">⏳ 불러오는 중...</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <script>
+    const data = [
+      { 품목: "가리비", 원산지: "국산", 중량: "1kg", 규격: "대", 단가: "10000", 창고: "부산", 브랜드: "누리" },
+      { 품목: "새우", 원산지: "베트남", 중량: "500g", 규격: "중", 단가: "7000", 창고: "인천", 브랜드: "누리" }
+    ];
 
-  <script src="script.js"></script>
+    const searchInput = document.getElementById("search");
+    const resultDiv = document.getElementById("result");
+    const tableBody = document.getElementById("tableBody");
+
+    function updateHeight() {
+      const visible = resultDiv.classList.contains("show");
+      const height = visible ? resultDiv.scrollHeight + 150 : 0;
+      window.parent.postMessage({ type: "setHeight", height }, "*");
+    }
+
+    searchInput.addEventListener("input", () => {
+      const keyword = searchInput.value.trim();
+      tableBody.innerHTML = "";
+
+      if (keyword) {
+        const filtered = data.filter(item => {
+          return Object.values(item).some(val => val.includes(keyword));
+        });
+
+        if (filtered.length > 0) {
+          resultDiv.classList.add("show");
+          filtered.forEach(row => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td>${row.품목}</td><td>${row.원산지}</td><td>${row.중량}</td><td>${row.규격}</td><td>${row.단가}</td><td>${row.창고}</td><td>${row.브랜드}</td>`;
+            tableBody.appendChild(tr);
+          });
+        } else {
+          resultDiv.classList.remove("show");
+        }
+      } else {
+        resultDiv.classList.remove("show");
+      }
+
+      updateHeight();
+    });
+  </script>
 </body>
 </html>
