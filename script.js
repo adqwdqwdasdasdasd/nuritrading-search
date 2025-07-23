@@ -4,18 +4,19 @@ async function loadData() {
   const res = await fetch('data.json');
   allData = await res.json();
   renderTable(allData);
-  sendHeight(); // 초기 높이 전달
+  sendHeight(); // 초기 높이
 }
 
 function renderTable(data) {
   const keyword = document.getElementById('searchInput').value.toLowerCase();
+  const table = document.getElementById('resultTable');
   const wrapper = document.getElementById('tableWrapper');
   const body = document.getElementById('resultBody');
   body.innerHTML = '';
 
   if (keyword.trim() === '') {
-    wrapper.classList.remove('active'); // 숨기기
-    sendHeight(); // 높이 재전송
+    wrapper.classList.remove('active');
+    sendHeight();
     return;
   }
 
@@ -28,7 +29,7 @@ function renderTable(data) {
   wrapper.classList.add('active');
 
   if (filtered.length === 0) {
-    body.innerHTML = '<tr><td colspan="7">🔍 검색 결과가 없습니다.</td></tr>';
+    body.innerHTML = `<tr><td colspan="7">🔍 검색 결과가 없습니다.</td></tr>`;
   } else {
     for (const item of filtered) {
       const row = document.createElement('tr');
@@ -45,16 +46,14 @@ function renderTable(data) {
     }
   }
 
-  sendHeight(); // 변경 후 높이 전달
+  sendHeight();
 }
 
 function sendHeight() {
   setTimeout(() => {
-    const h = document.documentElement.scrollHeight;
-    console.log("Sending height to parent:", h);
     window.parent.postMessage({
       type: 'setHeight',
-      height: h
+      height: document.documentElement.scrollHeight
     }, '*');
   }, 50);
 }
