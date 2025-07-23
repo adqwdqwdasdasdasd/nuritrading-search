@@ -8,15 +8,14 @@
     body {
       font-family: sans-serif;
       margin: 0;
-      padding: 30px;
       background: #ffffff;
     }
 
     .search-container {
       display: flex;
       justify-content: center;
-      margin-bottom: 20px;
-      padding: 0 16px;
+      padding: 16px;
+      margin: 0;
     }
 
     .search-box {
@@ -52,14 +51,16 @@
 
     #tableWrapper {
       overflow: hidden;
-      transition: max-height 0.3s ease-out, opacity 0.3s ease;
+      transition: max-height 0.25s ease-out, opacity 0.2s ease;
       max-height: 0;
       opacity: 0;
     }
 
     #tableWrapper.active {
-      max-height: 1000px;
+      max-height: 1200px;
       opacity: 1;
+      margin-top: 12px;
+      margin-bottom: 12px;
     }
 
     table {
@@ -79,8 +80,8 @@
     }
 
     @media (max-width: 600px) {
-      body {
-        padding: 16px;
+      .search-container {
+        padding: 12px;
       }
 
       .search-box input {
