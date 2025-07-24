@@ -68,22 +68,3 @@ document.getElementById('searchInput')
   .addEventListener('input', () => renderTable(allData));
 
 loadData();
-
-
-<script>
-  // 페이지 로드 직후 <head>에 스타일 추가
-  window.addEventListener('DOMContentLoaded', () => {
-    const css = `
-      .notion-collection .notion-collection-card .notion-collection-card-image img {
-        width: 100% !important;
-        height: auto !important;
-        object-fit: contain !important;
-        object-position: center center !important;
-      }
-    `;
-    const style = document.createElement('style');
-    style.type = 'text/css';
-    style.appendChild(document.createTextNode(css));
-    document.head.appendChild(style);
-  });
-</script>
