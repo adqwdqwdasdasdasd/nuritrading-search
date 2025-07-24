@@ -5,98 +5,53 @@
   <title>단가표 검색</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    /* ...기존 스타일... */
     body {
-      font-family: sans-serif;
       margin: 0;
-      padding: 30px;
-      background: #ffffff;
+      font-family: sans-serif;
     }
-
     .search-container {
+      padding: 16px;
+    }
+    .search-box {
       display: flex;
       justify-content: center;
-      margin-bottom: 20px;
-      padding: 0 16px;
     }
-
-    .search-box {
-      position: relative;
+    #searchInput {
       width: 100%;
-      max-width: 600px;
+      max-width: 500px;
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
     }
-
-    .search-box input {
-      width: 100%;
-      padding: 14px 48px 14px 20px;
-      font-size: 17px;
-      border: 2px solid #ccc;
-      border-radius: 999px;
-      outline: none;
-      transition: border-color 0.2s ease;
-      box-sizing: border-box;
-    }
-
-    .search-box input:focus {
-      border-color: #999;
-    }
-
-    .search-box::after {
-      content: "🔍";
-      position: absolute;
-      right: 18px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 18px;
-      color: #666;
-    }
-
     #tableWrapper {
-      overflow: hidden;
-      transition: max-height 0.3s ease-out, opacity 0.3s ease;
-      max-height: 0;
+      width: 100%;
+      transition: opacity 0.3s ease;
       opacity: 0;
+      height: 0;
+      overflow: hidden;
     }
-
     #tableWrapper.active {
-      max-height: 1000px;
       opacity: 1;
+      height: auto;
     }
-
     table {
       width: 100%;
       border-collapse: collapse;
+      margin: 16px 0;
     }
-
     th, td {
-      padding: 8px 6px;
-      border-bottom: 1px solid #ddd;
-      text-align: center;
-      font-size: 15px;
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
     }
-
     th {
-      background-color: #f9f9f9;
-    }
-
-    @media (max-width: 600px) {
-      body {
-        padding: 16px;
-      }
-
-      .search-box input {
-        font-size: 15px;
-        padding: 12px 44px 12px 16px;
-      }
-
-      th, td {
-        padding: 6px 4px;
-        font-size: 13px;
-      }
+      background-color: #f4f4f4;
     }
   </style>
 </head>
 <body>
-
   <div class="search-container">
     <div class="search-box">
       <input type="text" id="searchInput" placeholder="예: 가리비, 연어 등 검색" />
@@ -107,7 +62,13 @@
     <table id="resultTable">
       <thead>
         <tr>
-          <th>품목</th><th>원산지</th><th>중량</th><th>규격</th><th>단가</th><th>창고</th><th>브랜드</th>
+          <th>품목</th>
+          <th>원산지</th>
+          <th>중량</th>
+          <th>규격</th>
+          <th>단가</th>
+          <th>창고</th>
+          <th>브랜드</th>
         </tr>
       </thead>
       <tbody id="resultBody">
@@ -116,6 +77,7 @@
     </table>
   </div>
 
+  <!-- 수정된 script.js를 불러오기 -->
   <script src="script.js"></script>
 </body>
 </html>

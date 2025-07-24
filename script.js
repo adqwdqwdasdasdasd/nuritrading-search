@@ -1,38 +1,53 @@
 let allData = [];
 
+// ▶ parent로 높이 정보를 보내는 헬퍼 함수
+function updateHeight() {
+  const height = document.body.scrollHeight;
+  window.parent.postMessage(
+    { type: 'setHeight', height },
+    '*'  // 필요하다면 부모 origin으로 제한하세요
+  );
+}
+
 async function loadData() {
   const res = await fetch('data.json');
   allData = await res.json();
   renderTable(allData);
+  updateHeight(); // 초기 로드 후 한 번 전송
 }
 
 function renderTable(data) {
   const keyword = document.getElementById('searchInput').value.toLowerCase();
-  const table = document.getElementById('resultTable');
   const wrapper = document.getElementById('tableWrapper');
   const body = document.getElementById('resultBody');
+
   body.innerHTML = '';
 
+  // 1) 검색어가 없으면 숨기기
   if (keyword.trim() === '') {
     wrapper.classList.remove('active');
+    updateHeight();
     return;
   }
 
+  // 2) 필터링
   const filtered = data.filter(item =>
     Object.values(item).some(
       val => val && val.toString().toLowerCase().includes(keyword)
     )
   );
 
+  // 3) 결과 없으면 ‘검색 결과가 없습니다’ 표시
   if (filtered.length === 0) {
     wrapper.classList.add('active');
     body.innerHTML = `<tr><td colspan="7">🔍 검색 결과가 없습니다.</td></tr>`;
+    updateHeight();
     return;
   }
 
+  // 4) 결과 있으면 테이블에 렌더
   wrapper.classList.add('active');
-
-  for (const item of filtered) {
+  filtered.forEach(item => {
     const row = document.createElement('tr');
     row.innerHTML = `
       <td>${item.품목 || ''}</td>
@@ -44,11 +59,12 @@ function renderTable(data) {
       <td>${item.브랜드 || ''}</td>
     `;
     body.appendChild(row);
-  }
+  });
+  updateHeight();
 }
 
-document.getElementById('searchInput').addEventListener('input', () => {
-  renderTable(allData);
-});
+// ▶ 검색어 입력 시마다 다시 렌더 + 높이 갱신
+document.getElementById('searchInput')
+  .addEventListener('input', () => renderTable(allData));
 
 loadData();
